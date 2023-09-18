@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service for chobani'
+define service ZCHOBANI_S {
+  expose zchobani_head_p;
+  expose zchobani_attach_p;
+}

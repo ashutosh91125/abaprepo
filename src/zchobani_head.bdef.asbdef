@@ -1,0 +1,67 @@
+managed implementation in class zbp_chobani_head unique;
+strict ( 1 );
+
+with draft;
+
+define behavior for zchobani_head alias Order
+persistent table zchobani_hdr
+draft table zchobani_hdr_d
+lock master
+total etag Locallastchangedat
+authorization master ( global )
+etag master Lastchangedat
+{
+  create;
+  update;
+  delete;
+  association _Attachments { create; with draft; }
+
+  field( numbering : managed, readonly ) Id;
+  action ( features : instance ) setApproved result [1] $self;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zchobani_hdr {
+  Id = id;
+  Scaccode = scac_code;
+  Carriername =  carrier_name;
+  Bol = bol;
+  Salesorder = sales_order;
+  Loadnumber = load_number;
+  Invoicenumber = invoice_number;
+  Amount = amount;
+  Billoption = bill_option;
+  Nspinvoice = nsp_invoice;
+  Rowstatus = row_status;
+  Status = status;
+  Error = error;
+  LastChangedat = lastchangedat;
+  Locallastchangedat = locallastchangedat;
+
+  }
+}
+
+define behavior for zchobani_attach alias Attachments
+persistent table zchobani_att
+draft table zchobani_att_d
+lock dependent by _Order
+authorization dependent by _Order
+etag master LastChangedat
+{
+  update;
+  delete;
+  field ( readonly ) Id;
+  association _Order {with draft;}
+
+  mapping for zchobani_att {
+    Attachment = attachment;
+    Comments = comments;
+    Filename = filename;
+    Id = id;
+    Mimetype = mimetype;
+  }
+}
