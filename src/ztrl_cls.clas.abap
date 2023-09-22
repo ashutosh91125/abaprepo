@@ -1,10 +1,15 @@
 CLASS ztrl_cls DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
+protected section.
+private section.
 ENDCLASS.
 
 
-CLASS ztrl_cls IMPLEMENTATION.
+
+CLASS ZTRL_CLS IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     TRY.
         DATA(lo_mail) = cl_bcs_mail_message=>create_instance( ).
